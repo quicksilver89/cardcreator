@@ -1,0 +1,45 @@
+table
+{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td
+{
+    border: 1px solid #ccc;
+    padding: .2rem;
+}
+
+th
+{
+    background-color: #f4f4f4;
+}
+
+button
+{
+    margin: .2rem;
+    cursor: pointer;
+}
+
+.field
+{
+    margin-bottom: 1rem;
+}
+
+label
+{
+    font-weight: bold;
+}
+
+input[type="text"]
+{
+    width: 100%;
+    padding: .5rem;
+    box-sizing: border-box;
+}
+
+.button-container
+{
+    display: flex;
+    justify-content: flex-end;
+}

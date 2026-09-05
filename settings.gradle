@@ -1,3 +1,6 @@
 rootProject.name = 'card-creator'
 
-include( 'card_creator' )
+include(
+'card_creator:card_data',
+'card_creator:util'
+)
