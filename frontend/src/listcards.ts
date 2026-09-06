@@ -1,21 +1,24 @@
+import {fetchService} from './service.js';
+import type {CardAndId} from './types.js';
+
 window.addEventListener( 'DOMContentLoaded', async () =>
 {
-    fetchService( 'listcards' )
-    .then( data =>
+    try
     {
-        const table = document.getElementById( 'table-body' );
+        const data = await fetchService<CardAndId[]>( 'listcards' ) as CardAndId[];
+        const table = document.getElementById( 'table-body' ) as HTMLTableElement;
         data.forEach( cardAndId => addRow( table, cardAndId ) );
-        document.getElementById( 'loading' ).style.display = 'none';
-        document.getElementById( 'table' ).style.display = 'table';
-    } )
-    .catch( error =>
+        document.getElementById( 'loading' )!.style.display = 'none';
+        document.getElementById( 'table' )!.style.display = 'table';
+    }
+    catch( error )
     {
         console.error( error );
-        document.getElementById( 'loading' ).textContent = 'Failed to load data: ' + error.message;
-    } );
+        document.getElementById( 'loading' )!.textContent = 'Failed to load data: ' + ( error as Error ).message;
+    }
 } );
 
-function addRow( table, cardAndId )
+function addRow( table: HTMLTableElement, cardAndId: CardAndId ): void
 {
     const card = cardAndId.card;
     const row = table.insertRow();
@@ -36,18 +39,21 @@ function addRow( table, cardAndId )
     buttonCell.appendChild( deleteButton );
 }
 
-function editCard( id )
+function editCard( id: string ): void
 {
     window.location.href = `editcard.html?id=${encodeURIComponent( id )}`;
 }
 
-function deleteCard( row, cardAndId )
+async function deleteCard( row: HTMLTableRowElement, cardAndId: CardAndId ): Promise<void>
 {
-    fetchService( 'deletecard', cardAndId )
-    .then( _ => row.remove() )
-    .catch( error =>
+    try
+    {
+        await fetchService( 'deletecard', cardAndId );
+        row.remove();
+    }
+    catch( error )
     {
         console.error( error );
-        alert( error.message );
-    } );
+        alert( ( error as Error ).message );
+    }
 }

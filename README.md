@@ -12,18 +12,27 @@ Uses:
 * AWS CLI
 * AWS SAM CLI
 * Docker
-* `dynamodb_create_run.sh` Create a new database docker image and start it.
+* Node.js
+* `./scripts/dynamodb_create_run.sh` Create a new database docker image and start it.
+
+### Run On New Clone
+* In frontend `npm install`
 
 ### Run Each Reboot
-* `dynamodb_start.sh` Start the database docker image.
-* `frontend_run.sh` Start the web server.
+* `./scripts/dynamodb_start.sh` Start the database docker image.
+* `./frontend/scripts/serve.sh` Start the web server.
 
-### Run Each Java Code Change
-`sam_build_run.sh` Builds and runs the AWS lambda server.
+# Compile
+
+### Run On Each Backend Code Change
+`./scripts/sam_build_run.sh` Builds and runs the AWS lambda server.
+
+### Run On Each Frontend Code Change
+`./frontend/scripts/build.sh` Builds the web code.
 
 # Use App
 `http://localhost:8080`
 
 # Finish Using App
-`dynamodb_delete.sh` Deletes the database docker image.
+`./scripts/dynamodb_delete.sh` Deletes the database docker image.
 

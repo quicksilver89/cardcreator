@@ -5,6 +5,6 @@ set -e
 
 PORT="${1:-8080}"
 SERVICE_URL="http://localhost:3000"
-FRONTEND_DIR="$(dirname "$0")/../frontend"
+FRONTEND_DIR="$(dirname "$0")/../dist"
 
 npx http-server "$FRONTEND_DIR" -p "$PORT" -P "$SERVICE_URL" --cors -c-1

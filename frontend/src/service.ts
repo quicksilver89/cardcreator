@@ -1,7 +1,7 @@
-function fetchService( serviceName, param )
+export function fetchService<T = unknown>( serviceName: string, param?: unknown ): Promise<T | null>
 {
     const url = '/service/' + serviceName;
-    return ( (param === undefined ) ?
+    return ( ( param === undefined ) ?
         fetch( url ) :
         fetch( url,
         {
@@ -9,15 +9,15 @@ function fetchService( serviceName, param )
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify( param )
         } ) )
-        .then( getJson );
+        .then( getJson<T> );
 }
 
-function getJson( response )
+function getJson<T = unknown>( response: Response ): Promise<T | null>
 {
     return response.text()
     .then( text =>
     {
-        let data;
+        let data: unknown;
         try
         {
             data = JSON.parse( text );
@@ -26,19 +26,19 @@ function getJson( response )
         {
             if( response.ok )
             {
-                return text;
+                return null;
             }
             throw new Error( text );
         }
 
         if( response.ok )
         {
-            return data;
+            return data as T;
         }
 
         if( data && typeof data === 'object' && 'error' in data )
         {
-            throw new Error( data.error );
+            throw new Error( ( data as { error: string } ).error );
         }
 
         throw new Error( text );
