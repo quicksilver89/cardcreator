@@ -24,7 +24,7 @@ Uses:
 # Compile
 
 ### Run On Each Backend Code Change
-`./backend/scripts/sam_build.sh` Builds the Java AWS lambda server.
+`./backend/scripts/build.sh` Builds the Java AWS lambda server.
 
 ### Run On Each Frontend Code Change
 `./frontend/scripts/build.sh` Builds the web code.

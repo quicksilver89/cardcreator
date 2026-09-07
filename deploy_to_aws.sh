@@ -5,5 +5,5 @@ set -e
 
 cd "$(dirname "$0")"
 
-./backend/scripts/build.sh
-./frontend/scripts/build.sh
+./backend/scripts/deploy_to_aws.sh
+./frontend/scripts/deploy_to_aws.sh
