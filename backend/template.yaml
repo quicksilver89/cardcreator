@@ -113,7 +113,7 @@ Resources:
             Path: /service/editcard
             Method: post
 
-  EchoFunction:
+  DeleteCardFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: card_creator/card_data
