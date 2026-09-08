@@ -38,15 +38,24 @@ public class DynamoDbCardDatabase implements CardDatabase
     public DynamoDbCardDatabase()
     {
         String endpoint = System.getenv( "DYNAMODB_ENDPOINT" );
+        String accessKeyId = System.getenv( "DYNAMODB_ACCESS_KEY_ID" );
+        String secretAccessKey = System.getenv( "DYNAMODB_SECRET_ACCESS_KEY" );
+        String region = System.getenv( "AWS_REGION" );
         String tableName = System.getenv( "CARD_TABLE_NAME" );
 
         DynamoDbClientBuilder client = DynamoDbClient.builder();
+
         if( endpoint != null && !endpoint.isEmpty() )
         {
             client.endpointOverride( URI.create( endpoint ) );
-            client.region( Region.US_EAST_1 );
-            client.credentialsProvider( StaticCredentialsProvider.create( AwsBasicCredentials.create( "none", "none" ) ) );
         }
+
+        if( accessKeyId != null && !accessKeyId.isEmpty() && secretAccessKey != null && !secretAccessKey.isEmpty() )
+        {
+            client.credentialsProvider( StaticCredentialsProvider.create( AwsBasicCredentials.create( accessKeyId, accessKeyId ) ) );
+        }
+
+        client.region( Region.of( region ) );
 
         DynamoDbEnhancedClient enhanced = DynamoDbEnhancedClient.builder()
             .dynamoDbClient( client.build() )

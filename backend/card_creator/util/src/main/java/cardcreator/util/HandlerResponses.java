@@ -21,7 +21,7 @@ public class HandlerResponses
 
     public static APIGatewayProxyResponseEvent error( Exception error )
     {
-        return error( error.getMessage() );
+        return error( error.getClass().getSimpleName() + ": " + error.getMessage() );
     }
 
     public static APIGatewayProxyResponseEvent error( String message )

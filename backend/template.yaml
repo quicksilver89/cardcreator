@@ -7,13 +7,10 @@ Globals:
     MemorySize: 512
     Environment:
       Variables:
-        DYNAMODB_ENDPOINT: "http://dynamodb:8000"
+        DYNAMODB_ENDPOINT: ""
+        DYNAMODB_ACCESS_KEY_ID: ""
+        DYNAMODB_SECRET_ACCESS_KEY: ""
         CARD_TABLE_NAME: !Ref CardTable
-  Api:
-    Cors:
-      AllowMethods: "'POST,OPTIONS'"
-      AllowHeaders: "'Content-Type'"
-      AllowOrigin: "'*'"
 
 Resources:
   CardTable:
@@ -120,7 +117,7 @@ Resources:
       Handler: cardcreator.carddata.handlers.DeleteCardHandler::handleRequest
       Runtime: java25
       Policies:
-        - DynamoDBWritePolicy:
+        - DynamoDBCrudPolicy:
             TableName: !Ref CardTable
       Architectures:
         - x86_64
@@ -130,15 +127,15 @@ Resources:
           Properties:
             Path: /service/deletecard
             Method: post
-            
+
   FrontendBucket:
     Type: AWS::S3::Bucket
     Properties:
       PublicAccessBlockConfiguration:
-        BlockPublicAcls: false
-        BlockPublicPolicy: false
-        IgnorePublicAcls: false
-        RestrictPublicBuckets: false
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
 
   FrontendBucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -146,8 +143,77 @@ Resources:
       Bucket: !Ref FrontendBucket
       PolicyDocument:
         Statement:
-          - Sid: PublicReadGetObject
+          - Sid: AllowCloudFrontServicePrincipal
             Effect: Allow
-            Principal: "*"
+            Principal:
+              Service: cloudfront.amazonaws.com
             Action: "s3:GetObject"
             Resource: !Join ["", ["arn:aws:s3:::", !Ref FrontendBucket, "/*"]]
+            Condition:
+              StringEquals:
+                "AWS:SourceArn": !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/${CloudFrontDistribution}"
+
+  CloudFrontOAC:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Name: !Sub "${AWS::StackName}-frontend-oac"
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
+  CloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        DefaultRootObject: index.html
+        HttpVersion: http2
+        PriceClass: PriceClass_100
+        Origins:
+          - Id: FrontendOrigin
+            DomainName: !GetAtt FrontendBucket.RegionalDomainName
+            OriginAccessControlId: !GetAtt CloudFrontOAC.Id
+            S3OriginConfig:
+              OriginAccessIdentity: ""
+          - Id: ApiOrigin
+            DomainName: !Sub "${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com"
+            OriginPath: "/Prod"
+            CustomOriginConfig:
+              OriginProtocolPolicy: https-only
+              OriginSSLProtocols:
+                - TLSv1.2
+
+        DefaultCacheBehavior:
+          TargetOriginId: FrontendOrigin
+          ViewerProtocolPolicy: redirect-to-https
+          AllowedMethods: [GET, HEAD]
+          CachedMethods: [GET, HEAD]
+          Compress: true
+          ForwardedValues:
+            QueryString: false
+            Cookies:
+              Forward: none
+
+        CacheBehaviors:
+          - PathPattern: "/service/*"
+            TargetOriginId: ApiOrigin
+            ViewerProtocolPolicy: redirect-to-https
+            AllowedMethods: [GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE]
+            CachedMethods: [GET, HEAD]
+            Compress: true
+            MinTTL: 0
+            DefaultTTL: 0
+            MaxTTL: 0
+            ForwardedValues:
+              QueryString: true
+              Headers:
+                - Content-Type
+                - Authorization
+              Cookies:
+                Forward: all
+
+Outputs:
+  CloudFrontURL:
+    Description: "CloudFront distribution domain (use this as your site URL)"
+    Value: !Sub "https://${CloudFrontDistribution.DomainName}"

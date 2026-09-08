@@ -5,4 +5,4 @@ set -e
 
 cd "$(dirname "$0")/.."
 
-sam local start-api --docker-network dynamodb
+sam local start-api --docker-network dynamodb --env-vars env.json
