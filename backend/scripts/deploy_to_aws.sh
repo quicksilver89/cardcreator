@@ -7,4 +7,4 @@ cd "$(dirname "$0")"
 ./build.sh
 
 cd ".."
-sam deploy #--guided Can be added to update config
+sam deploy --no-fail-on-empty-changeset #--guided Can be added to update config

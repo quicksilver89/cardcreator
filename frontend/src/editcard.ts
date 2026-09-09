@@ -1,4 +1,4 @@
-import {fetchService} from './service.js';
+import {fetchService, fetchServiceFromButton} from './service.js';
 import type {Card} from './types.js';
 
 interface EditCardPayload
@@ -43,7 +43,8 @@ else
     document.getElementById( 'contents' )!.style.display = 'block';
 }
 
-document.getElementById( 'submitBtn' )!.addEventListener( 'click', async () =>
+const submitButton: HTMLButtonElement = document.getElementById( 'submitBtn' ) as HTMLButtonElement;
+submitButton!.addEventListener( 'click', async () =>
 {
     let functionName: string;
     let payload: Card | EditCardPayload;
@@ -78,7 +79,7 @@ document.getElementById( 'submitBtn' )!.addEventListener( 'click', async () =>
 
     try
     {
-        await fetchService( functionName, payload );
+        await fetchServiceFromButton( submitButton, functionName, payload );
         window.location.href = 'listcards.html';
     }
     catch( error )

@@ -1,4 +1,4 @@
-import {fetchService} from './service.js';
+import {fetchService, fetchServiceFromButton, disableButton} from './service.js';
 import type {CardAndId} from './types.js';
 
 window.addEventListener( 'DOMContentLoaded', async () =>
@@ -28,27 +28,28 @@ function addRow( table: HTMLTableElement, cardAndId: CardAndId ): void
 
     const editButton = document.createElement( 'button' );
     editButton.textContent = 'Edit';
-    editButton.addEventListener( 'click', ()=> editCard( cardAndId.id ) );
+    editButton.addEventListener( 'click', ()=> editCard( editButton, cardAndId.id ) );
 
     const deleteButton = document.createElement( 'button' );
     deleteButton.textContent = 'Delete';
-    deleteButton.addEventListener( 'click', ()=> deleteCard( row, cardAndId ) );
+    deleteButton.addEventListener( 'click', ()=> deleteCard( deleteButton, row, cardAndId ) );
 
     const buttonCell = row.insertCell( 3 );
     buttonCell.appendChild( editButton );
     buttonCell.appendChild( deleteButton );
 }
 
-function editCard( id: string ): void
+function editCard( button: HTMLButtonElement, id: string ): void
 {
+    disableButton( button );
     window.location.href = `editcard.html?id=${encodeURIComponent( id )}`;
 }
 
-async function deleteCard( row: HTMLTableRowElement, cardAndId: CardAndId ): Promise<void>
+async function deleteCard( button: HTMLButtonElement, row: HTMLTableRowElement, cardAndId: CardAndId ): Promise<void>
 {
     try
     {
-        await fetchService( 'deletecard', cardAndId );
+        await fetchServiceFromButton( button, 'deletecard', cardAndId );
         row.remove();
     }
     catch( error )
@@ -57,3 +58,10 @@ async function deleteCard( row: HTMLTableRowElement, cardAndId: CardAndId ): Pro
         alert( ( error as Error ).message );
     }
 }
+
+const newCardButton: HTMLButtonElement = document.getElementById( 'newCardBtn' ) as HTMLButtonElement;
+newCardButton!.addEventListener( 'click', async () =>
+{
+    disableButton( newCardButton );
+    window.location.href = `editcard.html`;
+} );

@@ -1,3 +1,14 @@
+export function disableButton( button: HTMLButtonElement ): void
+{
+    button.disabled = true;
+}
+
+export function fetchServiceFromButton<T = unknown>( button: HTMLButtonElement, serviceName: string, param?: unknown ): Promise<T | null>
+{
+    disableButton( button );
+    return fetchService( serviceName, param );
+}
+
 export function fetchService<T = unknown>( serviceName: string, param?: unknown ): Promise<T | null>
 {
     const url = '/service/' + serviceName;
