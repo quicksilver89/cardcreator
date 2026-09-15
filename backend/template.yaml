@@ -41,8 +41,8 @@ Resources:
   ListCardsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: card_creator/card_data
-      Handler: cardcreator.carddata.handlers.ListCardsHandler::handleRequest
+      CodeUri: card_creator/control/aws
+      Handler: cardcreator.aws.handlers.ListCardsHandler::handleRequest
       Runtime: java25
       Policies:
         - DynamoDBReadPolicy:
@@ -59,8 +59,8 @@ Resources:
   GetCardFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: card_creator/card_data
-      Handler: cardcreator.carddata.handlers.GetCardHandler::handleRequest
+      CodeUri: card_creator/control/aws
+      Handler: cardcreator.aws.handlers.GetCardHandler::handleRequest
       Runtime: java25
       Policies:
         - DynamoDBReadPolicy:
@@ -77,8 +77,8 @@ Resources:
   NewCardFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: card_creator/card_data
-      Handler: cardcreator.carddata.handlers.NewCardHandler::handleRequest
+      CodeUri: card_creator/control/aws
+      Handler: cardcreator.aws.handlers.NewCardHandler::handleRequest
       Runtime: java25
       Policies:
         - DynamoDBWritePolicy:
@@ -95,8 +95,8 @@ Resources:
   EditCardFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: card_creator/card_data
-      Handler: cardcreator.carddata.handlers.EditCardHandler::handleRequest
+      CodeUri: card_creator/control/aws
+      Handler: cardcreator.aws.handlers.EditCardHandler::handleRequest
       Runtime: java25
       Policies:
         - DynamoDBWritePolicy:
@@ -113,8 +113,8 @@ Resources:
   DeleteCardFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: card_creator/card_data
-      Handler: cardcreator.carddata.handlers.DeleteCardHandler::handleRequest
+      CodeUri: card_creator/control/aws
+      Handler: cardcreator.aws.handlers.DeleteCardHandler::handleRequest
       Runtime: java25
       Policies:
         - DynamoDBCrudPolicy:

@@ -1,6 +1,9 @@
 rootProject.name = 'card-creator'
 
 include(
-'card_creator:card_data',
-'card_creator:util'
+'card_creator:data',
+'card_creator:database:database',
+'card_creator:database:dynamodb',
+'card_creator:service',
+'card_creator:control:aws'
 )

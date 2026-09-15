@@ -10,3 +10,10 @@ export interface CardAndId
     id: string;
     card: Card;
 }
+
+export interface EditCard
+{
+    id: string;
+    oldCard: Card;
+    newCard: Card;
+}

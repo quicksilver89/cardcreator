@@ -1,12 +1,5 @@
 import {fetchService, fetchServiceFromButton} from './service.js';
-import type {Card} from './types.js';
-
-interface EditCardPayload
-{
-    id: string;
-    oldCard: Card;
-    newCard: Card;
-}
+import type {Card, EditCard} from './types.js';
 
 const id = new URLSearchParams( window.location.search ).get( 'id' );
 
@@ -47,7 +40,7 @@ const submitButton: HTMLButtonElement = document.getElementById( 'submitBtn' ) a
 submitButton!.addEventListener( 'click', async () =>
 {
     let functionName: string;
-    let payload: Card | EditCardPayload;
+    let payload: Card | EditCard;
 
     const card: Card =
         {

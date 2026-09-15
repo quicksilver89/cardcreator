@@ -1,7 +1,0 @@
-dependencies {
-    implementation project( ':card_creator:util' )
-    implementation libs.aws.lambda.core
-    implementation libs.aws.lambda.events
-    implementation libs.dynamodb
-    implementation libs.gson
-}

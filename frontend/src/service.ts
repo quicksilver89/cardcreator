@@ -52,6 +52,11 @@ function getJson<T = unknown>( response: Response ): Promise<T | null>
             throw new Error( ( data as { error: string } ).error );
         }
 
+        if( data && typeof data === 'object' && 'message' in data )
+        {
+            throw new Error( ( data as { message: string } ).message );
+        }
+
         throw new Error( text );
     } );
 }

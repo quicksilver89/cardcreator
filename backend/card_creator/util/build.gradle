@@ -1,5 +1,0 @@
-dependencies {
-    implementation libs.aws.lambda.core
-    implementation libs.aws.lambda.events
-    implementation libs.gson
-}

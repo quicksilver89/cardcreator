@@ -1,0 +1,7 @@
+dependencies {
+    implementation project( ':card_creator:data' )
+    implementation project( ':card_creator:service' )
+    implementation libs.aws.lambda.core
+    implementation libs.aws.lambda.events
+    implementation libs.gson
+}
