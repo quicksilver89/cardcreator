@@ -3,9 +3,20 @@ aws-lambda-core = "1.4.0"
 aws-lambda-events = "3.16.1"
 dynamodb = "2.54.7"
 gson = "2.14.0"
+spring-boot = "4.1.1"
+spring-dependency-management = "1.1.7"
+swagger = "3.1.1"
 
 [libraries]
 aws-lambda-core = { group = "com.amazonaws", name = "aws-lambda-java-core", version.ref = "aws-lambda-core" }
 aws-lambda-events = { group = "com.amazonaws", name = "aws-lambda-java-events", version.ref = "aws-lambda-events" }
-dynamodb= { group = "software.amazon.awssdk", name = "dynamodb-enhanced", version.ref = "dynamodb" }
+dynamodb = { group = "software.amazon.awssdk", name = "dynamodb-enhanced", version.ref = "dynamodb" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+spring-boot = { group = "org.springframework.boot", name = "spring-boot-starter-webmvc", version.ref = "spring-boot" }
+swagger = { group = "org.springdoc", name = "springdoc-openapi-starter-webmvc-ui", version.ref = "swagger" }
+
+[plugins]
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }
+
+

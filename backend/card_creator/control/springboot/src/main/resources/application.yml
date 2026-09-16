@@ -1,0 +1,15 @@
+server:
+  port: 3000
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+dynamodb:
+  endpoint: http://localhost:42619
+  accesskeyid: none
+  secretaccesskey: none
+  awsregion: us-east-1
+  tablename: CardTable

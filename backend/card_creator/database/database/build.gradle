@@ -1,3 +1,7 @@
+plugins {
+    id 'java-library'
+}
+
 dependencies {
-    implementation project( ':card_creator:data' )
+    api project( ':card_creator:data' )
 }

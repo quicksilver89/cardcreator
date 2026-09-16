@@ -1,13 +1,13 @@
 subprojects {
-	apply plugin: 'java'
+    plugins.withId( 'java' ) {
+        repositories {
+            mavenCentral()
+        }
 
-	repositories {
-		mavenCentral()
-	}
-
-	java {
-		toolchain {
-		    languageVersion = JavaLanguageVersion.of( 25 )
-		}
-	}
+        java {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of( 25 )
+            }
+        }
+    }
 }

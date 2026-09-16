@@ -6,4 +6,9 @@ public class ErrorMessageException extends Exception
     {
         super( message );
     }
+
+    public ErrorMessage getErrorMessage()
+    {
+        return new ErrorMessage( getMessage() );
+    }
 }

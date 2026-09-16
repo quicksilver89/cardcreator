@@ -38,11 +38,11 @@ public class DynamoDbCardDatabase implements CardDatabase
 
     public DynamoDbCardDatabase()
     {
-        String endpoint = System.getenv( "DYNAMODB_ENDPOINT" );
-        String accessKeyId = System.getenv( "DYNAMODB_ACCESS_KEY_ID" );
-        String secretAccessKey = System.getenv( "DYNAMODB_SECRET_ACCESS_KEY" );
-        String region = System.getenv( "AWS_REGION" );
-        String tableName = System.getenv( "CARD_TABLE_NAME" );
+        String endpoint = getConfig( "DYNAMODB_ENDPOINT", "dynamodb.endpoint");
+        String accessKeyId = getConfig( "DYNAMODB_ACCESS_KEY_ID", "dynamodb.accesskeyid" );
+        String secretAccessKey = getConfig( "DYNAMODB_SECRET_ACCESS_KEY", "dynamodb.secretaccesskey" );
+        String region = getConfig( "AWS_REGION", "dynamodb.awsregion" );
+        String tableName = getConfig( "CARD_TABLE_NAME", "dynamodb.tablename" );
 
         DynamoDbClientBuilder client = DynamoDbClient.builder();
 
@@ -63,6 +63,12 @@ public class DynamoDbCardDatabase implements CardDatabase
             .build();
 
         this.table = enhanced.table( tableName, TableSchema.fromBean( CardRecord.class ) );
+    }
+
+    private static String getConfig( String envName, String propertyName )
+    {
+        String val = System.getenv( envName );
+        return val == null ? System.getProperty( propertyName ) : val;
     }
 
     @Override

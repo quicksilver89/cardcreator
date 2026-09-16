@@ -1,6 +1,5 @@
 package cardcreator.aws.util;
 
-import cardcreator.data.ErrorMessage;
 import cardcreator.data.ErrorMessageException;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -18,11 +17,7 @@ public abstract class ErrorHandler implements RequestHandler<APIGatewayProxyRequ
         }
         catch( ErrorMessageException e )
         {
-            return HandlerResponses.error( new ErrorMessage( e ) );
-        }
-        catch( Exception e )
-        {
-            return HandlerResponses.error( new ErrorMessage( e ) );
+            return HandlerResponses.error( e.getErrorMessage() );
         }
     }
 
