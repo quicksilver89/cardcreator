@@ -92,7 +92,7 @@ public class DynamoDbCardDatabase implements CardDatabase
     @Override
     public Card getCard( String id )
     {
-        Key key = Key.builder() .partitionValue( id ).build();
+        Key key = Key.builder().partitionValue( id ).build();
         CardRecord result = table.getItem( r -> r.key( key ) );
         return result == null ? null : new Card( result.getCardName(), result.getCardCost(), result.getCardText() );
     }
@@ -202,15 +202,18 @@ public class DynamoDbCardDatabase implements CardDatabase
 
     private static String createExpression( Expression.Builder expression, String fieldName, String fieldValue )
     {
-        if( fieldValue == null || fieldValue.isEmpty() )
+        if( fieldValue == null )
+        {
+            return "attribute_not_exists(fieldName)";
+        }
+
+        if( fieldValue.isEmpty() )
         {
             expression.putExpressionValue( ":zero", AttributeValue.fromN( "0" ) );
-            return "size(" + fieldName + ") = :zero";
+            return "size(" + fieldName + ")=:zero";
         }
-        else
-        {
-            expression.putExpressionValue( ":" + fieldName, AttributeValue.fromS( fieldValue ) );
-            return fieldName + " = :" + fieldName;
-        }
+
+        expression.putExpressionValue( ":" + fieldName, AttributeValue.fromS( fieldValue ) );
+        return fieldName + "=:" + fieldName;
     }
 }
