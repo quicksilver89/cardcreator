@@ -35,11 +35,6 @@ function getJson<T = unknown>( response: Response ): Promise<T | null>
         }
         catch( jsonError )
         {
-            if( response.ok )
-            {
-                return null;
-            }
-            throw new Error( text );
         }
 
         if( response.ok )
@@ -52,6 +47,6 @@ function getJson<T = unknown>( response: Response ): Promise<T | null>
             throw new Error( ( data as { message: string } ).message );
         }
 
-        throw new Error( text );
+        throw new Error( "Unknown Error" );
     } );
 }
