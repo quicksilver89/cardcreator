@@ -3,6 +3,6 @@ plugins {
 }
 
 dependencies {
-    api project( ':card_creator:database:database' )
+    api project( ':app:database:database' )
     implementation libs.dynamodb
 }

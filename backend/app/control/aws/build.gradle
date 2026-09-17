@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation project( ':card_creator:service' )
+    implementation project( ':app:service' )
     implementation libs.aws.lambda.core
     implementation libs.aws.lambda.events
     implementation libs.gson

@@ -1,10 +1,10 @@
 rootProject.name = 'card-creator'
 
 include(
-'card_creator:data',
-'card_creator:database:database',
-'card_creator:database:dynamodb',
-'card_creator:service',
-'card_creator:control:aws',
-'card_creator:control:springboot'
+'app:data',
+'app:database:database',
+'app:database:dynamodb',
+'app:service',
+'app:control:aws',
+'app:control:springboot'
 )

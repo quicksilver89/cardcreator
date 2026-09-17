@@ -3,5 +3,5 @@ plugins {
 }
 
 dependencies {
-    api project( ':card_creator:data' )
+    api project( ':app:data' )
 }

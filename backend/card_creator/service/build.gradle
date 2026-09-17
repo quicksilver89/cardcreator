@@ -1,8 +1,0 @@
-plugins {
-    id 'java-library'
-}
-
-dependencies {
-    api project( ':card_creator:data' )
-    implementation project( ':card_creator:database:dynamodb' )
-}

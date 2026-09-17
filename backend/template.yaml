@@ -41,7 +41,7 @@ Resources:
   ListCardsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: card_creator/control/aws
+      CodeUri: app/control/aws
       Handler: cardcreator.aws.handlers.ListCardsHandler::handleRequest
       Runtime: java25
       Policies:
@@ -59,7 +59,7 @@ Resources:
   GetCardFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: card_creator/control/aws
+      CodeUri: app/control/aws
       Handler: cardcreator.aws.handlers.GetCardHandler::handleRequest
       Runtime: java25
       Policies:
@@ -77,7 +77,7 @@ Resources:
   NewCardFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: card_creator/control/aws
+      CodeUri: app/control/aws
       Handler: cardcreator.aws.handlers.NewCardHandler::handleRequest
       Runtime: java25
       Policies:
@@ -95,7 +95,7 @@ Resources:
   EditCardFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: card_creator/control/aws
+      CodeUri: app/control/aws
       Handler: cardcreator.aws.handlers.EditCardHandler::handleRequest
       Runtime: java25
       Policies:
@@ -113,7 +113,7 @@ Resources:
   DeleteCardFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: card_creator/control/aws
+      CodeUri: app/control/aws
       Handler: cardcreator.aws.handlers.DeleteCardHandler::handleRequest
       Runtime: java25
       Policies:

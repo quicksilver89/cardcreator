@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-    implementation project( ':card_creator:service' )
+    implementation project( ':app:service' )
     implementation libs.spring.boot
     implementation libs.swagger
 }
