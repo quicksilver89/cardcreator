@@ -5,5 +5,5 @@ set -e
 
 cd "$(dirname "$0")"
 
-./backend/scripts/build.sh
+./backend/scripts/sam_build.sh
 ./frontend/scripts/build.sh

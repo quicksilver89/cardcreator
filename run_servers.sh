@@ -17,5 +17,5 @@ trap cleanup INT
 ./backend/scripts/dynamodb_start.sh
 ./frontend/scripts/run_server.sh&
 SERVE_PID=$!
-./backend/scripts/run_server.sh
+./backend/scripts/sam_run_server.sh
 
