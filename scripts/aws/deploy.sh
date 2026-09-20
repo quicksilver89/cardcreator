@@ -6,5 +6,5 @@ set -e
 cd "$(dirname "$0")"
 ./build.sh
 
-cd ".."
+cd "../../backend"
 sam deploy --no-fail-on-empty-changeset #--guided Can be added to update config

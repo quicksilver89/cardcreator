@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cardcreator-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cardcreator-service
+  template:
+    metadata:
+      labels:
+        app: cardcreator-service
+    spec:
+      containers:
+        - name: cardcreator-service
+          image: cardcreator_service
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: cardcreator-config
+            - secretRef:
+                name: cardcreator-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cardcreator-service-entrypoint
+spec:
+  selector:
+    app: cardcreator-service
+  ports:
+    - port: 3000
+      targetPort: 8080

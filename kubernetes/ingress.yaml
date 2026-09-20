@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cardcreator-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /service/
+            pathType: Prefix
+            backend:
+              service:
+                name: cardcreator-service-entrypoint
+                port: { number: 3000 }
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: cardcreator-frontend-entrypoint
+                port: { number: 80 }

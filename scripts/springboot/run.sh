@@ -3,6 +3,6 @@ set -e
 
 # Run the Spring Boot server.
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/../../backend"
 
 ./gradlew bootRun
