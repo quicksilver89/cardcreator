@@ -8,14 +8,14 @@ import java.util.List;
 
 public interface CardDatabase
 {
-    List<CardAndId> listCards() throws ErrorMessageException;
+    List<CardAndId> listCards( String userId ) throws ErrorMessageException;
 
-    Card getCard( String id ) throws ErrorMessageException;
+    Card getCard( String userId, String cardId ) throws ErrorMessageException;
 
-    String addNewCard( Card card ) throws ErrorMessageException;
+    String addNewCard( String userId, Card card ) throws ErrorMessageException;
 
-    boolean editCard( String id, Card oldCard, Card newCard ) throws ErrorMessageException;
+    boolean editCard( String userId, String cardId, Card oldCard, Card newCard ) throws ErrorMessageException;
 
-    boolean deleteCard( String id, Card card ) throws ErrorMessageException;
+    boolean deleteCard( String userId, String cardId, Card card ) throws ErrorMessageException;
 }
 

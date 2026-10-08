@@ -6,7 +6,6 @@ import cardcreator.database.CardDatabase;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
-import software.amazon.awssdk.enhanced.dynamodb.DynamoDbIndex;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.Expression;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
@@ -32,7 +31,7 @@ import java.util.UUID;
 
 public class DynamoDbCardDatabase implements CardDatabase
 {
-    private static final String GSI_PK_VALUE = "ALL";
+    private static final String INSERTION_ORDER_INDEX = "InsertionOrderIndex";
 
     private final DynamoDbTable<CardRecord> table;
 
@@ -72,23 +71,20 @@ public class DynamoDbCardDatabase implements CardDatabase
     }
 
     @Override
-    public List<CardAndId> listCards()
+    public List<CardAndId> listCards( String userId )
     {
-        DynamoDbIndex<CardRecord> insertionTimeIndex = table.index( "InsertionOrderIndex" );
-
-        QueryConditional queryConditional = QueryConditional.keyEqualTo( Key.builder().partitionValue( GSI_PK_VALUE ).build() );
         QueryEnhancedRequest queryRequest = QueryEnhancedRequest.builder()
-            .queryConditional( queryConditional )
+            .queryConditional( QueryConditional.keyEqualTo( Key.builder().partitionValue( userId ).build() ) )
             .scanIndexForward( true )
             .build();
 
         List<CardAndId> cards = new ArrayList<>();
 
-        for( Page<CardRecord> page : insertionTimeIndex.query( queryRequest ) )
+        for( Page<CardRecord> page : table.index( INSERTION_ORDER_INDEX ).query( queryRequest ) )
         {
             for( CardRecord card : page.items() )
             {
-                cards.add( new CardAndId( card.getId(), new Card( card.getCardName(), card.getCardCost(), card.getCardText() ) ) );
+                cards.add( new CardAndId( card.getCardId(), new Card( card.getCardName(), card.getCardCost(), card.getCardText() ) ) );
             }
         }
 
@@ -96,25 +92,25 @@ public class DynamoDbCardDatabase implements CardDatabase
     }
 
     @Override
-    public Card getCard( String id )
+    public Card getCard( String userId, String cardId )
     {
-        Key key = Key.builder().partitionValue( id ).build();
+        Key key = Key.builder().partitionValue( userId ).sortValue( cardId ).build();
         CardRecord result = table.getItem( r -> r.key( key ) );
         return result == null ? null : new Card( result.getCardName(), result.getCardCost(), result.getCardText() );
     }
 
     @Override
-    public String addNewCard( Card card )
+    public String addNewCard( String userId, Card card )
     {
         for( int i=0; i<10; i++ )
         {
             try
             {
-                String id = UUID.randomUUID().toString();
+                String cardId = UUID.randomUUID().toString();
 
                 CardRecord record = new CardRecord();
-                record.setId( id );
-                record.setGsiPk( GSI_PK_VALUE );
+                record.setUserId( userId );
+                record.setCardId( cardId );
                 record.setCreatedAt( Instant.now().toString() );
 
                 record.setCardName( card.name() );
@@ -122,11 +118,11 @@ public class DynamoDbCardDatabase implements CardDatabase
                 record.setCardText( card.text() );
 
                 table.putItem( PutItemEnhancedRequest.builder( CardRecord.class )
-                    .item(record)
-                    .conditionExpression( Expression.builder().expression( "attribute_not_exists(id)" ).build() )
+                    .item( record )
+                    .conditionExpression( Expression.builder().expression( "attribute_not_exists(cardId)" ).build() )
                     .build() );
 
-                return id;
+                return cardId;
             }
             catch( ConditionalCheckFailedException _ )
             {
@@ -137,7 +133,7 @@ public class DynamoDbCardDatabase implements CardDatabase
     }
 
     @Override
-    public boolean editCard( String id, Card oldCard, Card newCard )
+    public boolean editCard( String userId, String cardId, Card oldCard, Card newCard )
     {
         if( oldCard.equals( newCard ) )
         {
@@ -147,7 +143,8 @@ public class DynamoDbCardDatabase implements CardDatabase
         try
         {
             CardRecord recordToUpdate = new CardRecord();
-            recordToUpdate.setId( id );
+            recordToUpdate.setUserId( userId );
+            recordToUpdate.setCardId( cardId );
             if( !newCard.name().equals( oldCard.name() ) )
             {
                 recordToUpdate.setCardName( newCard.name() );
@@ -175,12 +172,12 @@ public class DynamoDbCardDatabase implements CardDatabase
     }
 
     @Override
-    public boolean deleteCard( String id, Card card )
+    public boolean deleteCard( String userId, String cardId, Card card )
     {
         try
         {
             table.deleteItem( DeleteItemEnhancedRequest.builder()
-                .key( Key.builder().partitionValue( id ).build() )
+                .key( Key.builder().partitionValue( userId ).sortValue( cardId ).build() )
                 .conditionExpression( createCardMatchingCondition( card ) )
                 .build() );
             return true;

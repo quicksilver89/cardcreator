@@ -4,37 +4,39 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSecondaryPartitionKey;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSecondarySortKey;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSortKey;
 
 @DynamoDbBean
 public class CardRecord
 {
-    private String id;
-    private String gsiPk;
+    private String userId;
+    private String cardId;
     private String createdAt;
     private String cardName;
     private String cardCost;
     private String cardText;
 
     @DynamoDbPartitionKey
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId( String id )
-    {
-        this.id = id;
-    }
-
     @DynamoDbSecondaryPartitionKey(indexNames = "InsertionOrderIndex")
-    public String getGsiPk()
+    public String getUserId()
     {
-        return gsiPk;
+        return userId;
     }
 
-    public void setGsiPk( String gsiPk )
+    public void setUserId( String userId )
     {
-        this.gsiPk = gsiPk;
+        this.userId = userId;
+    }
+
+    @DynamoDbSortKey
+    public String getCardId()
+    {
+        return cardId;
+    }
+
+    public void setCardId( String cardId )
+    {
+        this.cardId = cardId;
     }
 
     @DynamoDbSecondarySortKey(indexNames = "InsertionOrderIndex")

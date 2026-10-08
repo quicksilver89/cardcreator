@@ -17,6 +17,6 @@ public class EditCardHandler extends ConsumerHandler<EditCard>
     @Override
     protected void accept( EditCard cardEdit ) throws ErrorMessageException
     {
-        service.editCard( cardEdit );
+        service.editCard( "ALL", cardEdit );
     }
 }

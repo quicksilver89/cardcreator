@@ -17,6 +17,6 @@ public class DeleteCardHandler extends ConsumerHandler<CardAndId>
     @Override
     protected void accept( CardAndId cardAndId ) throws ErrorMessageException
     {
-        service.deleteCard( cardAndId );
+        service.deleteCard( "ALL", cardAndId );
     }
 }

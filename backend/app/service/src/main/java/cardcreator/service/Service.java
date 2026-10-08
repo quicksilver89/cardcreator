@@ -19,9 +19,9 @@ public class Service
         this.database = new DynamoDbCardDatabase();
     }
 
-    public List<CardAndId> listCards() throws ErrorMessageException
+    public List<CardAndId> listCards( String userId ) throws ErrorMessageException
     {
-        List<CardAndId> cards = database.listCards();
+        List<CardAndId> cards = database.listCards( userId );
         if( cards == null )
         {
             throw new ErrorMessageException( "Error retrieving card list." );
@@ -29,9 +29,9 @@ public class Service
         return cards;
     }
 
-    public Card getCard( CardId cardId ) throws ErrorMessageException
+    public Card getCard( String userId, CardId cardId ) throws ErrorMessageException
     {
-        Card card = database.getCard( cardId.id() );
+        Card card = database.getCard( userId, cardId.id() );
         if( card == null )
         {
             throw new ErrorMessageException( "Card not found." );
@@ -39,9 +39,9 @@ public class Service
         return card;
     }
 
-    public CardId newCard( Card card ) throws ErrorMessageException
+    public CardId newCard( String userId, Card card ) throws ErrorMessageException
     {
-        String id = database.addNewCard( card );
+        String id = database.addNewCard( userId, card );
         if( id == null )
         {
             throw new ErrorMessageException( "Could not create new card." );
@@ -49,17 +49,17 @@ public class Service
         return new CardId( id );
     }
 
-    public void editCard( EditCard cardEdit ) throws ErrorMessageException
+    public void editCard( String userId, EditCard cardEdit ) throws ErrorMessageException
     {
-        if( !database.editCard( cardEdit.id(), cardEdit.oldCard(), cardEdit.newCard() ) )
+        if( !database.editCard( userId, cardEdit.id(), cardEdit.oldCard(), cardEdit.newCard() ) )
         {
             throw new ErrorMessageException( "The card cannot be edited because someone else has changed it. Review the latest changes before editing." );
         }
     }
 
-    public void deleteCard( CardAndId cardAndId ) throws ErrorMessageException
+    public void deleteCard( String userId, CardAndId cardAndId ) throws ErrorMessageException
     {
-        if( !database.deleteCard( cardAndId.id(), cardAndId.card() ) )
+        if( !database.deleteCard( userId, cardAndId.id(), cardAndId.card() ) )
         {
             throw new ErrorMessageException( "The card cannot be deleted because someone else has changed it. Review the latest changes before deleting." );
         }

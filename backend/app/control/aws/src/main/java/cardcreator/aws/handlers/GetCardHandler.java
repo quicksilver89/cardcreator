@@ -18,6 +18,6 @@ public class GetCardHandler extends FunctionHandler<CardId>
     @Override
     protected Card apply( CardId cardId ) throws ErrorMessageException
     {
-        return service.getCard( cardId );
+        return service.getCard( "ALL", cardId );
     }
 }

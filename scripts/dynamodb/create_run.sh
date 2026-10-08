@@ -5,6 +5,8 @@ set -e
 
 PORT=42619
 
+cd "$(dirname "$0")/../../backend"
+
 docker stop dynamodb > /dev/null 2>&1 || true
 docker rm dynamodb > /dev/null 2>&1 || true
 docker volume rm dynamodb > /dev/null 2>&1 || true
@@ -26,25 +28,7 @@ until aws dynamodb list-tables --endpoint-url "http://localhost:$PORT" > /dev/nu
     sleep 1
 done
 
-aws dynamodb create-table \
-    --table-name CardTable \
-    --attribute-definitions \
-        AttributeName=id,AttributeType=S \
-        AttributeName=gsiPk,AttributeType=S \
-        AttributeName=createdAt,AttributeType=S \
-    --key-schema \
-        AttributeName=id,KeyType=HASH \
-    --billing-mode PAY_PER_REQUEST \
-    --global-secondary-indexes '[{
-        "IndexName": "InsertionOrderIndex",
-        "KeySchema": [
-            {"AttributeName": "gsiPk", "KeyType": "HASH"},
-            {"AttributeName": "createdAt", "KeyType": "RANGE"}
-        ],
-        "Projection": {
-            "ProjectionType": "ALL"
-        }
-    }]' \
-    --endpoint-url "http://localhost:$PORT" \
-    --no-cli-pager \
+npx --yes sam-dynamodb-create-table \
+    -f template.yaml \
+    -e "http://localhost:$PORT" \
     > /dev/null

@@ -18,6 +18,6 @@ public class NewCardHandler extends FunctionHandler<Card>
     @Override
     protected CardId apply( Card card ) throws ErrorMessageException
     {
-        return service.newCard( card );
+        return service.newCard( "ALL", card );
     }
 }

@@ -14,6 +14,6 @@ public class ListCardsHandler extends SupplierHandler
     @Override
     protected List<CardAndId> get() throws ErrorMessageException
     {
-        return service.listCards();
+        return service.listCards( "ALL" );
     }
 }
