@@ -21,6 +21,7 @@ An app designed to help learn the following tools:
 * Node.js
 * Kubectl
 * Minikube
+* Caddy
 
 ### Run On New Git Clone
 * In frontend `npm install`
@@ -47,6 +48,10 @@ An app designed to help learn the following tools:
 # Spring Boot Locally
 ### Build & Run
 `./scripts/springboot/run.sh` Build and run the spring boot service.
+
+# Keycloak Locally
+### Build & Run
+`./scripts/keycloak/create_run.sh` Build and run the keycloak server.
 
 # Frontend Locally
 ### Run

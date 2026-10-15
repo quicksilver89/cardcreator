@@ -1,3 +1,5 @@
+import { getAccessToken } from './auth.js';
+
 export function disableButton( button: HTMLButtonElement ): void
 {
     button.disabled = true;
@@ -9,15 +11,25 @@ export function fetchServiceFromButton<T = unknown>( button: HTMLButtonElement, 
     return fetchService( serviceName, param );
 }
 
-export function fetchService<T = unknown>( serviceName: string, param?: unknown ): Promise<T | null>
+export async function fetchService<T = unknown>( serviceName: string, param?: unknown ): Promise<T | null>
 {
+    const accessToken = await getAccessToken();//TODO handle case when token expires after this step but before completing the fetch
+    if (!accessToken)
+    {
+        throw new Error( 'Could not authenticate.' );
+    }
+
     const url = '/service/' + serviceName;
     return ( ( param === undefined ) ?
-        fetch( url ) :
+        fetch( url,
+        {
+            method: 'GET',
+            headers: { 'Authorization': `Bearer ${accessToken}` },
+        } ) :
         fetch( url,
         {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
             body: JSON.stringify( param )
         } ) )
         .then( getJson<T> );
@@ -47,6 +59,6 @@ function getJson<T = unknown>( response: Response ): Promise<T | null>
             throw new Error( ( data as { message: string } ).message );
         }
 
-        throw new Error( "Unknown Error" );
+        throw new Error( "Error fetching data" );
     } );
 }

@@ -8,5 +8,7 @@ plugins {
 dependencies {
     implementation project( ':app:service' )
     implementation libs.spring.boot
+    implementation libs.spring.boot.oauth2
+    implementation libs.spring.boot.security
     implementation libs.swagger
 }

@@ -13,3 +13,11 @@ dynamodb:
   secretaccesskey: none
   awsregion: us-east-1
   tablename: CardTable
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/cardcreator
+          jwk-set-uri: http://localhost:8080/realms/cardcreator/protocol/openid-connect/certs

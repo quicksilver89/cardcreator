@@ -13,6 +13,8 @@ aws-lambda-events = { group = "com.amazonaws", name = "aws-lambda-java-events", 
 dynamodb = { group = "software.amazon.awssdk", name = "dynamodb-enhanced", version.ref = "dynamodb" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 spring-boot = { group = "org.springframework.boot", name = "spring-boot-starter-webmvc", version.ref = "spring-boot" }
+spring-boot-oauth2 = { group = "org.springframework.boot", name = "spring-boot-starter-oauth2-resource-server", version.ref = "spring-boot" }
+spring-boot-security = { group = "org.springframework.boot", name = "spring-boot-starter-security", version.ref = "spring-boot" }
 swagger = { group = "org.springdoc", name = "springdoc-openapi-starter-webmvc-ui", version.ref = "swagger" }
 
 [plugins]
