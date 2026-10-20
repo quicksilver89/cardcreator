@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: cardcreator-config
-data:
-  DYNAMODB_ENDPOINT: "http://host.minikube.internal:42619"
-  AWS_REGION: "us-east-1"

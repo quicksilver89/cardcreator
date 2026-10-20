@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-config
+data:
+  DYNAMODB_ENDPOINT: "http://host.minikube.internal:42619"
+  AWS_REGION: us-east-1
+  SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: https://192.168.49.2/realms/cardcreator
+  SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: http://keycloak.default.svc.cluster.local:8080/realms/cardcreator/protocol/openid-connect/certs

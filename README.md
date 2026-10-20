@@ -19,9 +19,9 @@ An app designed to help learn the following tools:
 * AWS SAM CLI
 * Docker
 * Node.js
+* Caddy
 * Kubectl
 * Minikube
-* Caddy
 
 ### Run On New Git Clone
 * In frontend `npm install`
@@ -65,8 +65,7 @@ An app designed to help learn the following tools:
 ### Create
 `./scripts/kubernetes/create.sh` Create a new minikube cluster.
 ### Build
-`./scripts/kubernetes/build_backend.sh` Build the backend and push to minikube.  
-`./scripts/kubernetes/build_frontend.sh` Build the frontend and push to minikube.
+`./scripts/kubernetes/build.sh` Build everything and push to minikube.  
 ### Access
 `minikube ip` View the ip of the minikube.  
 `http://<minikube ip>` Open in web browser.

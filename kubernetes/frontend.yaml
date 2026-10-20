@@ -1,31 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cardcreator-frontend
+  name: frontend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: cardcreator-frontend
+      app: frontend
   template:
     metadata:
       labels:
-        app: cardcreator-frontend
+        app: frontend
     spec:
       containers:
-        - name: cardcreator-frontend
+        - name: frontend
           image: cardcreator_frontend
-          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: cardcreator-frontend-entrypoint
+  name: frontend
 spec:
   selector:
-    app: cardcreator-frontend
+    app: frontend
   ports:
     - port: 80
       targetPort: 80
