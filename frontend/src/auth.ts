@@ -26,7 +26,10 @@ export async function initAuth()
 export async function getAccessToken()
 {
     await initAuth();
+    await keycloak.updateToken( 60 );
     return keycloak.token;
 }
 
 export const logout = () => keycloak.logout( {redirectUri: window.location.origin} );
+
+initAuth();

@@ -13,7 +13,7 @@ export function fetchServiceFromButton<T = unknown>( button: HTMLButtonElement, 
 
 export async function fetchService<T = unknown>( serviceName: string, param?: unknown ): Promise<T | null>
 {
-    const accessToken = await getAccessToken();//TODO handle case when token expires after this step but before completing the fetch
+    const accessToken = await getAccessToken();
     if (!accessToken)
     {
         throw new Error( 'Could not authenticate.' );
