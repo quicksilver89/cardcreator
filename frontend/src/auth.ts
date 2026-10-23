@@ -2,7 +2,7 @@ import Keycloak from 'https://esm.sh/keycloak-js';
 
 const keycloak = new Keycloak(
 {
-    url: window.location.origin,
+    url: `${window.location.origin}/auth`,
     realm: 'cardcreator',
     clientId: 'cardcreator',
 } );

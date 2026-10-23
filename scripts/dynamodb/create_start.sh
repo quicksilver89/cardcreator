@@ -3,7 +3,7 @@ set -e
 
 # Create a new database docker image. If one exists, the old one will be deleted first.
 
-PORT=42619
+PORT=42610
 
 cd "$(dirname "$0")/../../backend"
 

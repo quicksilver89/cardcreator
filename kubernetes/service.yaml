@@ -32,5 +32,5 @@ spec:
   selector:
     app: service
   ports:
-    - port: 3000
+    - port: 42611
       targetPort: 8080

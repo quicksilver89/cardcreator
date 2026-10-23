@@ -19,7 +19,7 @@ kubectl rollout restart deployment frontend
 MINIKUBE_IP=$(minikube ip)
 
 echo ""
-echo "To setup Keycloak navigate to https://auth.$MINIKUBE_IP.nip.io and login with admin/admin"
+echo "To setup Keycloak navigate to https://$MINIKUBE_IP/auth and login with admin/admin"
 echo "Create a realm called 'cardcreator', a client called 'cardcreator' (add https://$MINIKUBE_IP/* to Valid redirect URIs), and a user with a password"
 echo ""
 echo "Access the app at https://$MINIKUBE_IP"

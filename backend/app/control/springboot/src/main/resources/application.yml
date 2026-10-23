@@ -1,5 +1,5 @@
 server:
-  port: 3000
+  port: 42611
 
 springdoc:
   api-docs:
@@ -8,7 +8,7 @@ springdoc:
     enabled: true
 
 dynamodb:
-  endpoint: http://localhost:42619
+  endpoint: http://localhost:42610
   accesskeyid: none
   secretaccesskey: none
   awsregion: us-east-1
@@ -19,5 +19,5 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8080/realms/cardcreator
-          jwk-set-uri: http://localhost:8080/realms/cardcreator/protocol/openid-connect/certs
+          issuer-uri: http://localhost:8080/auth/realms/cardcreator
+          jwk-set-uri: http://localhost:42612/auth/realms/cardcreator/protocol/openid-connect/certs
