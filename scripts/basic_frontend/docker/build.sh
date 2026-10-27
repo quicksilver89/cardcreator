@@ -7,4 +7,4 @@ cd "$(dirname "$0")"
 
 ../build.sh
 
-docker image build -t cardcreator_frontend -f Dockerfile ../../../frontend
+docker image build -t cardcreator_frontend -f Dockerfile ../../../frontend/basic

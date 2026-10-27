@@ -8,5 +8,5 @@ FRONTEND_STACK_NAME="s3://cardcreator-frontendbucket-yiqbfxgx2ypt/"
 cd "$(dirname "$0")"
 ./build.sh
 
-cd "../../frontend"
+cd "../../frontend/basic"
 aws s3 sync dist/ "$FRONTEND_STACK_NAME"

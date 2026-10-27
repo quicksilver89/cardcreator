@@ -6,7 +6,7 @@ cd "$(dirname "$0")/.."
 ./springboot/docker/build.sh
 minikube image load cardcreator_service
 
-./frontend/docker/build.sh
+./basic_frontend/docker/build.sh
 minikube image load cardcreator_frontend
 
 

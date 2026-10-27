@@ -24,7 +24,7 @@ An app designed to help learn the following tools:
 * Minikube
 
 ### Run On New Git Clone
-* In frontend `npm install`
+* In frontend/basic `npm install`
 
 
 # DynamoDb Locally
@@ -53,11 +53,11 @@ An app designed to help learn the following tools:
 ### Build & Run
 `./scripts/keycloak/create_run.sh` Build and run the keycloak server.
 
-# Frontend Locally
+# Basic Frontend Locally
 ### Run
-`./scripts/frontend/run.sh` Run the server. Only needs to be done once per comptuer restart.
+`./scripts/basic_frontend/run.sh` Run the server. Only needs to be done once per comptuer restart.
 ### Build
-`./scripts/frontend/build.sh` Build the frontend.
+`./scripts/basic_frontend/build.sh` Build the frontend.
 ### Access
 `http://localhost:8080` Open in web browser.
 
@@ -77,6 +77,6 @@ An app designed to help learn the following tools:
 ### Backend
 `./scripts/aws/deploy.sh` Build & deploy the backend to the AWS cloud.
 ### Frontend
-`./scripts/frontend/deploy_to_aws.sh` Build & deploy the frontend to the AWS cloud.
+`./scripts/basic_frontend/deploy_to_aws.sh` Build & deploy the frontend to the AWS cloud.
 ### Access
 The end of the backend deploy will tell you the url. Open in web browser.

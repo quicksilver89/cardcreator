@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-cd "$(dirname "$0")/../../frontend"
+cd "$(dirname "$0")/../../frontend/basic"
 
 SRC="src/"
 DIST="dist/"

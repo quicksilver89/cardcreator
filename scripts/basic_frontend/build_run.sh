@@ -7,7 +7,7 @@ cd "$(dirname "$0")"
 
 ./build.sh
 
-cd "../../frontend/dist"
+cd "../../frontend/basic/dist"
 
 caddy run --config - --adapter caddyfile <<EOF
 :8080 {
