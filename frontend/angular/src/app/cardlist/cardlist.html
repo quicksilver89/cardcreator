@@ -1,0 +1,23 @@
+@if( cardService.cards.value(); as cards ) {
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Cost</th>
+        <th>Text</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (card of cards; track card.id) {
+        <tr app-cardlist-row [card]="card" (delete)="cardService.deleteCard(card)"></tr>
+      }
+    </tbody>
+  </table>
+
+  <div class="button-container">
+    <button routerLink="/editcard">Create New Card</button>
+  </div>
+} @else {
+  Error: Failed to load cards.
+}

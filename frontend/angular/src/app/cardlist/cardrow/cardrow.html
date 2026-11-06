@@ -1,0 +1,7 @@
+<td>{{ card().card.name }}</td>
+<td>{{ card().card.cost }}</td>
+<td>{{ card().card.text }}</td>
+<td>
+  <button [routerLink]="['/editcard', card().id]">Edit</button>
+  <button (click)="delete.emit()">Delete</button>
+</td>

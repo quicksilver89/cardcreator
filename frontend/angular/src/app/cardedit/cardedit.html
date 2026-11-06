@@ -1,0 +1,9 @@
+<form [formGroup]="cardForm" (submit)="submitCard()">
+  <label>Name <input type="text" formControlName="name" /></label>
+  <label>Cost <input type="text" formControlName="cost" /></label>
+  <label>Text <input type="text" formControlName="text" /></label>
+
+  <div class="button-container">
+    <button type="submit" [disabled]="saveButtonDisabled()">Save</button>
+  </div>
+</form>
