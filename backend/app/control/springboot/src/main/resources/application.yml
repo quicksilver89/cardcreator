@@ -20,4 +20,4 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8080/auth/realms/cardcreator
-          jwk-set-uri: http://localhost:42612/auth/realms/cardcreator/protocol/openid-connect/certs
+          jwk-set-uri: http://localhost:8080/auth/realms/cardcreator/protocol/openid-connect/certs

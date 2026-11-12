@@ -2,5 +2,9 @@
   "/service": {
     "target": "http://localhost:42611",
     "secure": false
+  },
+  "/auth": {
+    "target": "http://localhost:42612",
+    "secure": false
   }
 }
