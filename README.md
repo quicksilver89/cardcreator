@@ -41,7 +41,7 @@ An app designed to help learn the following tools:
 
 # AWS Locally
 ### Run
-`./scripts/aws/run.sh` Run the server. Only needs to be done once per comptuer restart.
+`./scripts/aws/run.sh` Run the server.
 ### Build
 `./scripts/aws/build.sh` Build the AWS lambda service for local running.
 
@@ -55,9 +55,15 @@ An app designed to help learn the following tools:
 
 # Basic Frontend Locally
 ### Run
-`./scripts/basic_frontend/run.sh` Run the server. Only needs to be done once per comptuer restart.
+`./scripts/basic_frontend/run.sh` Run the server.
 ### Build
 `./scripts/basic_frontend/build.sh` Build the frontend.
+### Access
+`http://localhost:8080` Open in web browser.
+
+# Angular Frontend Locally
+### Run
+`./scripts/angular_frontend/run.sh` Run the server and builds as needed.
 ### Access
 `http://localhost:8080` Open in web browser.
 
