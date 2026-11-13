@@ -9,12 +9,16 @@ minikube image load cardcreator_service
 ./basic_frontend/docker/build.sh
 minikube image load cardcreator_frontend
 
+./angular_frontend/docker/build.sh
+minikube image load cardcreator_angular
+
 
 cd "../kubernetes"
 kubectl apply -f . -f local
 
 kubectl rollout restart deployment service
 kubectl rollout restart deployment frontend
+kubectl rollout restart deployment angular
 
 MINIKUBE_IP=$(minikube ip)
 
