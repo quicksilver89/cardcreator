@@ -4,6 +4,7 @@ include(
 'app:data',
 'app:database:database',
 'app:database:dynamodb',
+'app:database:postgres',
 'app:service',
 'app:control:aws',
 'app:control:springboot'

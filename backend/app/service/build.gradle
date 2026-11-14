@@ -4,5 +4,5 @@ plugins {
 
 dependencies {
     api project( ':app:data' )
-    implementation project( ':app:database:dynamodb' )
+    implementation project( ':app:database:postgres' )
 }

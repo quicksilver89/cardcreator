@@ -1,0 +1,13 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    api project( ':app:database:database' )
+    implementation libs.hibernate.core
+    implementation libs.hibernate.hikaricp
+    annotationProcessor libs.hibernate.processor
+    runtimeOnly libs.postgres
+    implementation libs.flywaydb.core
+    implementation libs.flywaydb.postgres
+}

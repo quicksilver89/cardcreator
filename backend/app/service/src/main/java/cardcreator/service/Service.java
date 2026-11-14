@@ -6,7 +6,7 @@ import cardcreator.data.CardId;
 import cardcreator.data.EditCard;
 import cardcreator.data.ErrorMessageException;
 import cardcreator.database.CardDatabase;
-import cardcreator.database.dynamodb.DynamoDbCardDatabase;
+import cardcreator.database.postgres.PostgresCardDatabaseFactory;
 
 import java.util.List;
 
@@ -16,12 +16,20 @@ public class Service
 
     public Service()
     {
-        this.database = new DynamoDbCardDatabase();
+        this.database = PostgresCardDatabaseFactory.create();
     }
 
     public List<CardAndId> listCards( String userId ) throws ErrorMessageException
     {
-        List<CardAndId> cards = database.listCards( userId );
+        List<CardAndId> cards = null;
+        try
+        {
+            cards = database.listCards( userId );
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();//TODO logging
+        }
         if( cards == null )
         {
             throw new ErrorMessageException( "Error retrieving card list." );
@@ -31,37 +39,82 @@ public class Service
 
     public Card getCard( String userId, CardId cardId ) throws ErrorMessageException
     {
-        Card card = database.getCard( userId, cardId.id() );
-        if( card == null )
+        try
         {
-            throw new ErrorMessageException( "Card not found." );
+            Card card = database.getCard( userId, cardId.id() );
+            if( card == null )
+            {
+                throw new ErrorMessageException( "Card not found." );
+            }
+            return card;
         }
-        return card;
+        catch( ErrorMessageException e )
+        {
+            throw e;
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();//TODO logging
+            throw new ErrorMessageException( "Error retrieving card." );
+
+        }
     }
 
     public CardId newCard( String userId, Card card ) throws ErrorMessageException
     {
-        String id = database.addNewCard( userId, card );
+        String id = null;
+        try
+        {
+            id = database.addNewCard( userId, card );
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();//TODO logging
+        }
         if( id == null )
         {
-            throw new ErrorMessageException( "Could not create new card." );
+            throw new ErrorMessageException( "Error creating card." );
         }
         return new CardId( id );
     }
 
     public void editCard( String userId, EditCard cardEdit ) throws ErrorMessageException
     {
-        if( !database.editCard( userId, cardEdit.id(), cardEdit.oldCard(), cardEdit.newCard() ) )
+        try
         {
-            throw new ErrorMessageException( "The card cannot be edited because someone else has changed it. Review the latest changes before editing." );
+            if( !database.editCard( userId, cardEdit.id(), cardEdit.oldCard(), cardEdit.newCard() ) )
+            {
+                throw new ErrorMessageException( "The card cannot be edited because it has been changed. Review the latest changes before editing." );
+            }
+        }
+        catch( ErrorMessageException e )
+        {
+            throw e;
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();//TODO logging
+            throw new ErrorMessageException( "Error editing card." );
         }
     }
 
     public void deleteCard( String userId, CardAndId cardAndId ) throws ErrorMessageException
     {
-        if( !database.deleteCard( userId, cardAndId.id(), cardAndId.card() ) )
+        try
         {
-            throw new ErrorMessageException( "The card cannot be deleted because someone else has changed it. Review the latest changes before deleting." );
+            if( !database.deleteCard( userId, cardAndId.id(), cardAndId.card() ) )
+            {
+                throw new ErrorMessageException( "The card cannot be deleted because it has been changed. Review the latest changes before deleting." );
+            }
+        }
+        catch( ErrorMessageException e )
+        {
+            throw e;
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();//TODO logging
+            throw new ErrorMessageException( "Error deleting card." );
         }
     }
 }

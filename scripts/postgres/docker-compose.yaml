@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: cardcreator_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: cardcreator
+      POSTGRES_PASSWORD: cardcreator
+      POSTGRES_DB: cardcreator
+    ports:
+      - "42613:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+volumes:
+  postgres_data:

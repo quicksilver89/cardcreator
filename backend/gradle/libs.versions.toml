@@ -2,7 +2,10 @@
 aws-lambda-core = "1.4.0"
 aws-lambda-events = "3.16.1"
 dynamodb = "2.54.7"
+flywaydb = "13.12.1"
 gson = "2.14.0"
+hibernate = "7.4.15.Final"
+postgres = "42.7.14"
 spring-boot = "4.1.1"
 spring-dependency-management = "1.1.7"
 swagger = "3.1.1"
@@ -11,7 +14,13 @@ swagger = "3.1.1"
 aws-lambda-core = { group = "com.amazonaws", name = "aws-lambda-java-core", version.ref = "aws-lambda-core" }
 aws-lambda-events = { group = "com.amazonaws", name = "aws-lambda-java-events", version.ref = "aws-lambda-events" }
 dynamodb = { group = "software.amazon.awssdk", name = "dynamodb-enhanced", version.ref = "dynamodb" }
+flywaydb-core = { group = "org.flywaydb", name = "flyway-core", version.ref = "flywaydb" }
+flywaydb-postgres = { group = "org.flywaydb", name = "flyway-database-postgresql", version.ref = "flywaydb" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+hibernate-core = { group = "org.hibernate.orm", name = "hibernate-core", version.ref = "hibernate" }
+hibernate-hikaricp = { group = "org.hibernate.orm", name = "hibernate-hikaricp", version.ref = "hibernate" }
+hibernate-processor = { group = "org.hibernate.orm", name = "hibernate-processor", version.ref = "hibernate" }
+postgres = { group = "org.postgresql", name = "postgresql", version.ref = "postgres" }
 spring-boot = { group = "org.springframework.boot", name = "spring-boot-starter-webmvc", version.ref = "spring-boot" }
 spring-boot-oauth2 = { group = "org.springframework.boot", name = "spring-boot-starter-oauth2-resource-server", version.ref = "spring-boot" }
 spring-boot-security = { group = "org.springframework.boot", name = "spring-boot-starter-security", version.ref = "spring-boot" }
