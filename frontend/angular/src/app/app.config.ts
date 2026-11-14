@@ -22,7 +22,8 @@ export const appConfig: ApplicationConfig = {
         clientId: 'cardcreator'
       },
       initOptions: {
-        onLoad: 'login-required'
+        onLoad: 'login-required',
+        checkLoginIframe: false
       }
     }),
     { provide: INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG, useValue: [serviceCondition] },
