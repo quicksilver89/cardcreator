@@ -6,15 +6,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UncheckedIOException;
 import java.util.Properties;
 
 public final class PostgresCardDatabaseFactory
 {
-    private static final String CONFIG_FILE = "/card-database.properties";
-
     private PostgresCardDatabaseFactory()
     {
     }
@@ -37,19 +32,38 @@ public final class PostgresCardDatabaseFactory
 
     private static Properties loadProperties()
     {
-        Properties props = new Properties();
-        try( InputStream in = PostgresCardDatabaseFactory.class.getResourceAsStream( CONFIG_FILE ) )
+        Properties properties = new Properties();
+        setProperty( properties, "POSTGRES_URL", AvailableSettings.JAKARTA_JDBC_URL, null );
+        setProperty( properties, "POSTGRES_USER", AvailableSettings.JAKARTA_JDBC_USER, null );
+        setProperty( properties, "POSTGRES_PASSWORD", AvailableSettings.JAKARTA_JDBC_PASSWORD, null );
+        setProperty( properties, null, AvailableSettings.HBM2DDL_AUTO, "validate" );
+        setProperty( properties, null, "hibernate.hikari.maximumPoolSize", "10" );
+        setProperty( properties, null, "hibernate.show_sql", "false" );
+        return properties;
+    }
+
+    private static void setProperty( Properties properties, String envName, String propertyName, String defaultVal )
+    {
+        if( envName == null )
         {
-            props.load( in );
-        }
-        catch( IOException e )
-        {
-            throw new UncheckedIOException( "Could not read card database configuration", e );
+            envName = propertyName.toUpperCase().replace( '.', '_' );
         }
 
-        props.setProperty( AvailableSettings.HBM2DDL_AUTO, "validate" );
+        String val = System.getenv( envName );
+        if( val == null )
+        {
+            val = System.getProperty( propertyName );
+            if( val == null )
+            {
+                if( defaultVal == null )
+                {
+                    throw new IllegalStateException( "Missing required env \"" + envName + "\" or property \"" + propertyName + "\"" );
+                }
+                val = defaultVal;
+            }
+        }
 
-        return props;
+        properties.setProperty( propertyName, val );
     }
 
     private static void migrate( Properties properties )

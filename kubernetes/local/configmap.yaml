@@ -7,3 +7,5 @@ data:
   AWS_REGION: us-east-1
   SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: https://192.168.49.2/auth/realms/cardcreator
   SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: http://keycloak.default.svc.cluster.local:8080/auth/realms/cardcreator/protocol/openid-connect/certs
+  POSTGRES_URL: "jdbc:postgresql://my-release-postgresql:5432/cardcreator"
+  POSTGRES_USER: "cardcreator"

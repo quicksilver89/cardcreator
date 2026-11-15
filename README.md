@@ -39,6 +39,10 @@ An app designed to help learn the following tools:
 ### Delete
 `./scripts/dynamodb/delete.sh` Completely delete the database and docker image.
 
+# Postgres Locally
+### Run
+`./scripts/postgres/start.sh` Create a new database docker image and start it. This does not persist between restarts.
+
 # AWS Locally
 ### Run
 `./scripts/aws/run.sh` Run the server.

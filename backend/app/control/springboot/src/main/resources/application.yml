@@ -21,3 +21,10 @@ spring:
         jwt:
           issuer-uri: http://localhost:8080/auth/realms/cardcreator
           jwk-set-uri: http://localhost:8080/auth/realms/cardcreator/protocol/openid-connect/certs
+
+jakarta:
+  persistence:
+    jdbc:
+      url: jdbc:postgresql://localhost:42613/cardcreator
+      user: cardcreator
+      password: cardcreator
